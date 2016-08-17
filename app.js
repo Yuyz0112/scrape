@@ -14,14 +14,16 @@ const emails = [
   'lisdong@ssmpr.com'
 ]
 
-const scrape = async (word) => {
+const timeGap = 2 * 24 * 60 * 60 // 2 days
+
+const scrape = async (word, t) => {
   try {
     let result = {}
-    const news = new News(word)
+    const news = new News(word, t)
     Object.assign(result, await news.scrape())
-    const weibo = new Weibo(word)
+    const weibo = new Weibo(word, t)
     Object.assign(result, await weibo.scrape())
-    const wechat = new Wechat(word)
+    const wechat = new Wechat(word, t)
     Object.assign(result, await wechat.scrape())
     result.date = new Date()
     const temp = await Render(result, word)
@@ -34,4 +36,4 @@ const scrape = async (word) => {
   }
 }
 
-scrape('楚天高速')
+scrape('楚天高速', timeGap)

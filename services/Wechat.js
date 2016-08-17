@@ -3,8 +3,9 @@
 const scrapeIt = require("scrape-it")
 
 class Wechat {
-  constructor (word) {
+  constructor (word, timeGap) {
     this.word = word
+    this.timeGap = timeGap
     this.articleUrl = encodeURI(`http://weixin.sogou.com/weixin?type=2&query=${word}`)
     this.accountUrl = encodeURI(`http://weixin.sogou.com/weixin?type=1&query=${word}`)
   }
@@ -76,12 +77,20 @@ class Wechat {
     })
   }
 
+  checkTime (arr) {
+    return arr.filter(item => {
+      const now = new Date()
+      if (now.getTime() - (1000 * this.timeGap) < item.time.getTime()) return true
+      return false
+    })
+  }
+
   async scrape () {
     const article = await this.scrapeArticle()
     const account = await this.scrapeAccount()
     return {
       wechat: {
-        article: article.article,
+        article: this.checkTime(article.article),
         account: account.account
       }
     }

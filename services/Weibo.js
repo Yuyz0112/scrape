@@ -3,9 +3,10 @@
 const request = require('request-promise-native')
 
 class Weibo {
-  constructor (word) {
+  constructor (word, timeGap) {
     this.word = word
-    this.baseUrl = encodeURI('http://m.weibo.cn/page/pageJson'),
+    this.baseUrl = encodeURI('http://m.weibo.cn/page/pageJson')
+    this.timeGap = timeGap
     this.result = {
       weibo: []
     }
@@ -25,13 +26,20 @@ class Weibo {
     })
   }
 
+  checkTime (time) {
+    time = parseInt(time)
+    let now = new Date()
+    now = now.getTime() / 1000
+    return (now - this.timeGap < time) ? true : false
+  }
+
   parse (data) {
     let cards
     data.cards.forEach(group => {
       if (group.itemid === 'mblog') cards = group.card_group
     })
     cards.forEach(card => {
-      if (card.mblog) {
+      if (card.mblog && this.checkTime(card.mblog.created_timestamp)) {
         let item = {}
         item.url = card.scheme
         item.desc = card.mblog.text

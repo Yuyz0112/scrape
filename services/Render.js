@@ -3,7 +3,7 @@ const fs = require('fs')
 
 const formatDate = (_date) => {
   const date = new Date(_date)
-  return _date ? `${date.getYear() + 1900}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}` : ''
+  return _date ? `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}` : ''
 }
 
 const Render = async (data, word) => {
