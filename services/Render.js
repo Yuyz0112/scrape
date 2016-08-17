@@ -9,7 +9,8 @@ const formatDate = (_date) => {
 const Render = async (data, word) => {
   try {
     const date = data.date
-    const url = 'http://app.funyuchina.com/report/email.html'
+    const time = date.getTime()
+    const url = `http://app.funyuchina.com/report/${time}.html`
     let rendered = {
       news: '',
       weibo: '',
@@ -557,7 +558,7 @@ const Render = async (data, word) => {
       </body>
     </html>
     `
-    await fs.writeFile('./email.html', template)
+    await fs.writeFile(`/virtualhost/app/report/${time}.html`, template)
     return template
   } catch (e) {
     console.log(e)
