@@ -1,5 +1,6 @@
 'use strict'
 
+const later = require('later')
 const News = require('./services/News')
 const Weibo = require('./services/Weibo')
 const Wechat = require('./services/Wechat')
@@ -21,11 +22,9 @@ const scrape = async (word, t) => {
   try {
     let result = {}
     const news = new News(word, t)
-    Object.assign(result, await news.scrape())
     const weibo = new Weibo(word, t)
-    Object.assign(result, await weibo.scrape())
     const wechat = new Wechat(word, t)
-    Object.assign(result, await wechat.scrape())
+    Object.assign(result, await news.scrape(), await weibo.scrape(), await wechat.scrape())
     result.date = new Date()
     const temp = await Render(result, word)
     emails.forEach(async (email) => {
@@ -37,4 +36,8 @@ const scrape = async (word, t) => {
   }
 }
 
-scrape('楚天高速', timeGap)
+console.log((new Date()).toLocaleString())
+
+later.date.localTime()
+const sched = later.parse.recur().on(9, 16).hour()
+const timer = later.setInterval(() => scrape('楚天高速', timeGap), sched)

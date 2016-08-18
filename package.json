@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "later": "^1.2.0",
     "nodemailer": "^2.5.0",
     "request-promise-native": "^1.0.3",
     "scrape-it": "^3.1.1"
