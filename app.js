@@ -8,10 +8,11 @@ const sendMail = require('./services/Email.js')
 
 const emails = [
   '569812520@qq.com',
-  'joviwang@ssmpr.com',
-  'fy.liu@ssmpr.com',
-  'liumingna@ssmpr.com',
-  'lisdong@ssmpr.com'
+  '1952306929@qq.com',
+  '20697393@qq.com',
+  '350472390@qq.com',
+  '2286110207@qq.com',
+  'lis1988@qq.com'
 ]
 
 const timeGap = 2 * 24 * 60 * 60 // 2 days
